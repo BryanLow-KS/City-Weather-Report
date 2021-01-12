@@ -1,6 +1,11 @@
 const express = require("express");
 const https = require("https"); //native module, no need install
 const bodyParser = require("body-parser");
+require('dotenv').config()
+//tell this server to load anything in a file called .env into an environment variable
+
+// console.log(process.env);
+// //anything thats in the .env file will now be inside process.env
 
 const app = express();
 app.use(bodyParser.urlencoded({extended:true}));
@@ -13,7 +18,10 @@ app.post("/", function(req, res){
   const query = req.body.cityName; //based on the input in the html code
   //req.body is parsed by the bodyparser module, giving us access
   //to post requests from html files
-  const apiKey = "2a3de47e569b7580750c9477be7e65a3";
+  const apiKey = process.env.API_KEY;
+  //can pull the api key from the environment variable
+  //no longer in the code
+
   const unit = "metric"
   const url = "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&appid=" + apiKey + "&units=" + unit;
   //structure url according to cityName given by user
